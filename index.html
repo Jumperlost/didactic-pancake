@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Matrix</title>
+  </head>
+  <body>
+    <style>
+      body {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 20px;
+      }
+      span {
+        display: inline-block;
+        padding: 10px;
+        letter-spacing: 5px;
+        border: 1px solid #000000;
+        font-size: 24px;
+      }
+    </style>
+    <script>
+      let n = 0;
+      do {
+        n = prompt("Введіть довжину масива");
+        n = +n;
+      } while (isNaN(n) || n <= 0);
+      let c = 0;
+      do {
+        c = prompt("Введіть номер строки для підрахунку суми");
+      } while (isNaN(c) || c <= 0);
+
+      let k = 0;
+      do {
+        k = prompt("Введіть номер рядка для підрахунку суми");
+        k = parseInt(k);
+      } while (isNaN(k) || k <= 0);
+
+      let g = 0;
+      do {
+        g = prompt("Введіть кутовий елемент квадрата верх праворуч");
+        g = parseInt(g);
+      } while (isNaN(g) || g <= 0);
+
+      const matrixGeneration = (n, topRightElement) => {
+        const matrix = [];
+        for (let i = 0; i < n; i++) {
+          matrix[i] = [];
+          for (let j = 0; j < n; j++) {
+            if (i === 0 && j === n - 1) {
+              matrix[i][j] = topRightElement;
+            } else {
+              matrix[i][j] = Math.round(Math.random() * 9);
+            }
+          }
+        }
+        return matrix;
+      };
+      //1. Сума головна діагональ
+      document.write(`<h2>1. Сума головна діагональ</h2>`);
+
+      const displayMatrix = matrixGeneration(n, g);
+      let mainSum = 0;
+      for (let i = 0; i < n; i++) {
+        for (let j = 0; j < n; j++) {
+          const isDiagonal = i === j;
+          const colorStyle = isDiagonal ? "background-color:#1F51FF;" : "";
+
+          document.write(
+            `<span style='${colorStyle}'> ${displayMatrix[i][j]} </span>`
+          );
+          if (isDiagonal) {
+            mainSum += displayMatrix[i][j];
+          }
+        }
+        document.write("<br />");
+      }
+      document.write(
+        `<span style='color:black;'>Сума головної діагоналі = ${mainSum}</span> <br />`
+      );
+
+      // 2.Сума бічної діагоналі
+      document.write(`<h2>2. Сума бічної діагоналі</h2>`);
+
+      let sideSum = 0;
+      for (let i = 0; i < n; i++) {
+        for (let j = 0; j < n; j++) {
+          const sideDiagonal = i + j === n - 1;
+          const colorStyle = sideDiagonal ? "background-color:#CCCCFF;" : "";
+          if (sideDiagonal) {
+            sideSum += displayMatrix[i][j];
+          }
+          document.write(
+            `<span style='${colorStyle}'> ${displayMatrix[i][j]} </span>`
+          );
+        }
+        document.write("<br />");
+      }
+      document.write(
+        `<span style='color:black;'>Сума бічної діагоналі = ${sideSum}</span> <br />`
+      );
+
+      // 3.Сума половини матриці без головної діагоналі зверху зправа
+      document.write(
+        `<h2>3. Сума половини матриці без головної діагоналі зверху зправа</h2>`
+      );
+      let halfRightUpSum = 0;
+      for (let i = 0; i < n; i++) {
+        for (let j = 0; j < n; j++) {
+          const halfDiagonal = i <= j && i + j <= n - 1;
+          const colorStyle = halfDiagonal ? "background-color:#AA336A;" : "";
+          if (halfDiagonal) {
+            halfRightUpSum += displayMatrix[i][j];
+          }
+          document.write(
+            `<span style="${colorStyle}"> ${displayMatrix[i][j]}</span>`
+          );
+        }
+        document.write("<br />");
+      }
+      document.write(
+        `<span style='color:black;'>Сума половини матриці з головною діагоналлю зверху зправа = ${halfRightUpSum} </span> <br />`
+      );
+
+      // 4. Сума половини матриці з головною діагоналлю зверху зправа
+      document.write(
+        `<h2> 4. Сума половини матриці з головною діагоналлю зверху зправа</h2>`
+      );
+
+      let halfRightSum = 0;
+      for (let i = 0; i < n; i++) {
+        for (let j = 0; j < n; j++) {
+          const halfDiagonal = i <= j;
+          const colorStyle = halfDiagonal ? "background-color:#40E0D0;" : "";
+          if (halfDiagonal) {
+            halfRightSum += displayMatrix[i][j];
+          }
+          document.write(
+            `<span style="${colorStyle}"> ${displayMatrix[i][j]}</span>`
+          );
+        }
+        document.write("<br />");
+      }
+      document.write(
+        `<span style='color:black;'>Сума половини матриці з головною діагоналлю зверху зправа = ${halfRightSum} </span> <br />`
+      );
+
+      //5. Сума половини матриці без головної діагоналі знизу зліва
+      document.write(
+        `<h2>5. Сума половини матриці без головної діагоналі знизу зліва</h2>`
+      );
+      let halfLeftSum = 0;
+      for (let i = 0; i < n; i++) {
+        for (let j = 0; j < n; j++) {
+          const leftHalfDiagonal = i >= j;
+          const colorStyle = leftHalfDiagonal ? "background-color:#088F8F" : "";
+          if (leftHalfDiagonal) {
+            halfLeftSum += displayMatrix[i][j];
+          }
+          document.write(
+            `<span style="${colorStyle}"> ${displayMatrix[i][j]}</span>`
+          );
+        }
+        document.write("<br />");
+      }
+      document.write(
+        `<span style='color:black;'>Сума половини матриці без головної діагоналі знизу зліва = ${halfLeftSum}</span> <br />`
+      );
+
+      //6. Сума половини матриці з головною діагоналлю знизу зліва
+      document.write(
+        `<h2>6. Сума половини матриці з головною діагоналлю знизу зліва </h2>`
+      );
+      let halfMatrixMainSum = 0;
+      for (let i = 0; i < n; i++) {
+        for (let j = 0; j < n; j++) {
+          const leftHalfDiagonal = i >= j && i + j <= n - 1;
+          const colorStyle = leftHalfDiagonal ? "background-color:#F8C8DC" : "";
+          if (leftHalfDiagonal) {
+            halfMatrixMainSum += displayMatrix[i][j];
+          }
+          document.write(
+            `<span style="${colorStyle}"> ${displayMatrix[i][j]}</span>`
+          );
+        }
+        document.write("<br />");
+      }
+      document.write(
+        `<span style='color:black;'>Сума половини матриці з головною діагоналлю знизу зліва = ${halfMatrixMainSum}</span> <br />`
+      );
+
+      //7.Сума половини матриці без побічної діагоналі зверху зліва
+      document.write(
+        `<h2>7. Сума половини матриці без побічної діагоналі зверху зліва</h2>`
+      );
+      let halfMatrixUpRightSum = 0;
+      for (let i = 0; i < n; i++) {
+        for (let j = 0; j < n; j++) {
+          const halfMatrixUpRight = i + j <= n - 1;
+          const colorStyle = halfMatrixUpRight
+            ? "background-color:#F0E68C"
+            : "";
+          if (halfMatrixUpRight) {
+            halfMatrixUpRightSum += displayMatrix[i][j];
+          }
+          document.write(
+            `<span style="${colorStyle}"> ${displayMatrix[i][j]}</span>`
+          );
+        }
+        document.write("<br />");
+      }
+      document.write(
+        `<span style='color:black;'>Сума половини матриці без побічної діагоналі зверху зліва = ${halfMatrixUpRightSum}</span> <br />`
+      );
+      //8.Сума половини матриці з побочною діагоналлю зверху зліва
+      document.write(
+        `<h2>8. Сума половини матриці з побочною діагоналлю зверху зліва</h2>`
+      );
+      let halfMatrixSideUpLeftSum = 0;
+      for (let i = 0; i < n; i++) {
+        for (let j = 0; j < n; j++) {
+          const halfMatrixSideUpLeft = i + j >= n;
+          const colorStyle = halfMatrixSideUpLeft
+            ? "background-color:#A95C68"
+            : "";
+          if (halfMatrixSideUpLeft) {
+            halfMatrixSideUpLeftSum += displayMatrix[i][j];
+          }
+          document.write(
+            `<span style="${colorStyle}"> ${displayMatrix[i][j]}</span>`
+          );
+        }
+        document.write("<br />");
+      }
+      document.write(
+        `<span style='color:black;'>Сума половини матриці з побочною діагоналлю зверху зліва = ${halfMatrixSideUpLeftSum}</span> <br />`
+      );
+      //9. Сума половини матриці без побічної діагоналі внизу зправа
+      document.write(
+        `<h2>9. Сума половини матриці без побічної діагоналі внизу зправа</h2>`
+      );
+      let halfMatrixDownRightSum = 0;
+      for (let i = 0; i < n; i++) {
+        for (let j = 0; j < n; j++) {
+          const halfMatrixDownRight = i + j >= n;
+          const colorStyle = halfMatrixDownRight
+            ? "background-color:#00FFFF"
+            : "";
+          if (halfMatrixDownRight) {
+            halfMatrixDownRightSum += displayMatrix[i][j];
+          }
+          document.write(
+            `<span style="${colorStyle}"> ${displayMatrix[i][j]}</span>`
+          );
+        }
+        document.write("<br />");
+      }
+      document.write(
+        `<span style='color:black;'>Сума половини матриці без побічної діагоналі внизу зправа = ${halfMatrixDownRightSum}</span> <br />`
+      );
+
+      //10.Сума строки с
+      document.write(`<h2>10. Сума строки  </h2>`);
+      let sumStringC = 0;
+      const rowIndexC = c - 1;
+      for (let i = 0; i < n; i++) {
+        for (let j = 0; j < n; j++) {
+          const stringC = i === rowIndexC;
+          const colorStyle = stringC ? "background-color:#008080" : "";
+          if (stringC) {
+            sumStringC += displayMatrix[i][j];
+          }
+          document.write(
+            `<span style="${colorStyle}"> ${displayMatrix[i][j]}</span>`
+          );
+        }
+        document.write("<br />");
+      }
+      document.write(
+        `<span style='color:black;'>Сума строки  = ${sumStringC}</span> <br />`
+      );
+      //11. Сумма стовпця k
+      document.write(`<h2>11. Сумма стовпця </h2>`);
+      let sumColumnK = 0;
+      const rowIndexK = k - 1;
+      for (let i = 0; i < n; i++) {
+        for (let j = 0; j < n; j++) {
+          const columnK = j === rowIndexK;
+          const colorStyle = columnK ? "background-color:#FF7F50" : "";
+          if (columnK) {
+            sumColumnK += displayMatrix[i][j];
+          }
+          document.write(
+            `<span style="${colorStyle}"> ${displayMatrix[i][j]}</span>`
+          );
+        }
+        document.write("<br />");
+      }
+      document.write(
+        `<span style='color:black;'>Сума стовпця = ${sumColumnK}</span> <br />`
+      );
+    </script>
+  </body>
+</html>
